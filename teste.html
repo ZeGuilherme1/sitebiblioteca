@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Conexão MySQL a partir do Navegador</title>
+</head>
+<body>
+  <h1>Livros</h1>
+  <ul id="livros-lista"></ul>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mysql2/2.3.0/mysql2.js"></script>
+  <script>
+    const dbConfig = {
+      host: '127.0.0.1',
+      user: 'jose',
+      password: 'jose',
+      database: 'biblioteca',
+    };
+
+    const connection = new MySQL2(dbConfig);
+
+    connection.query('SELECT * FROM livros', (err, results) => {
+      if (err) {
+        console.error('Erro ao executar a consulta:', err);
+        return;
+      }
+
+      const livros = results;
+      const lista = document.getElementById('livros-lista');
+
+      livros.forEach((livro) => {
+        const li = document.createElement('li');
+        li.textContent = livro.titulo;
+        lista.appendChild(li);
+      });
+    });
+  </script>
+</body>
+</html>
